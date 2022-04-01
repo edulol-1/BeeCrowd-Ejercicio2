@@ -8,9 +8,12 @@ import java.io.BufferedReader;
  * caracteres, esta contiene al menos una minuscula, una mayuscula y un 
  * número. La contraseña no debe de contener espacios, letras acentuadas ni 
  * signos de puntuación.
+ * @author Eduardo Montaño Gómez.
+ * @version 1.0
+ * @since Laboratorio Modelado y programación.
  * */
 public class Main {
- 
+    
     public static void main(String[] args) throws IOException {
 	passwordValidator(); 
     }
@@ -27,17 +30,13 @@ public class Main {
 	BufferedReader br = new BufferedReader(ips);
 	String linea = null;
 	while((linea = br.readLine()) != null) {
-	    if (linea.length() > 32 || linea.length() < 6) {
+	    if (linea.length() > 32 || linea.length() < 6 ||
+		!contieneLetrasNoAcentuadasyNumeros(linea)) {
 		System.out.println("Senha invalida.");
-                continue;
+		continue;	        
 	    }
 	    
-	    if (!contieneNumerosDigitos(linea)) {
-		System.out.println("Senha invalida.");
-		continue;
-	    }
-	    
-	    if (esValida(linea))
+	    if (contieneAlMenosUnaMinusculaMayusculaDigito(linea))
 		System.out.println("Senha valida.");
 	    else
 		System.out.println("Senha invalida.");
@@ -52,7 +51,7 @@ public class Main {
      * @return true si el string contiene al menos una minuscula, una
      * mayuscula y un numero arabigo.
      */
-    private static boolean esValida(String linea) {
+    private static boolean contieneAlMenosUnaMinusculaMayusculaDigito(String linea) {
 	boolean hasLowerCase = false;
 	boolean hasUpperCase = false;
 	boolean hasDigit = false;
@@ -73,7 +72,7 @@ public class Main {
     /* Regresa true si el string contiene numeros y letras no
      * acentuadas ni signos de puntuacion.
      */
-    private static boolean contieneNumerosDigitos(String linea) {
+    private static boolean contieneLetrasNoAcentuadasyNumeros(String linea) {
 	for (int i = 0; i < linea.length(); i++) {
 	    char ch = linea.charAt(i);		
 	    if (!isLower(ch) && !isUpper(ch) && !isNumber(ch))
